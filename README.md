@@ -6,26 +6,24 @@ A Cloudflare Worker that parses incoming emails **Transaction Notification from 
 - Parses extracting:
   - **Sender** (Original sender if forwarded)
   - **Subject**
-  - **Status**
-  - **No. Referensi**
-  - **Merchant Tujuan**
-  - **Tanggal Pembayaran**
-  - **Jumlah**
-  - **Sumber Dana** (Supports "Rekening Sumber")
+  - **Nama Merchant**
+  - **Nominal Transaksi**
+  - **Tanggal Transaksi**
+  - **Nomor Kartu Kredit BNI**
 - Sends formatted notifications to Telegram.
 - Supports handling forwarded emails (extracts original details).
 
 ```json
 --- Extracted Data ---
 {
-  "namaMerchant": "QRIS-Rintisan 16",
-  "nominalTransaksi": "Rp 2.010.051",
+  "namaMerchant": "QRIS-RXXXXXXn 16",
+  "nominalTransaksi": "Rp 2.XXX.051",
   "tanggalTransaksi": "16/02/2026 21:45",
-  "nomorKartuKredit": "MASTERCARDXX6915"
+  "nomorKartuKredit": "MASTERCARDXXXXXX"
 }
 ```
 
-<img src="./img/photo_2026-02-10-Medium.jpeg" alt="image" />
+<img src="./photo_2026-02-16.jpeg" alt="image" />
 
 ## Setup
 
