@@ -23,7 +23,7 @@ A Cloudflare Worker that parses incoming emails **Transaction Notification from 
 }
 ```
 
-<img src="./photo_2026-02-16.jpeg" alt="image" />
+<img src="./img/photo_2026-02-16.jpeg" alt="image" />
 
 ## Setup
 
