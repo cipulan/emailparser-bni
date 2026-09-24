@@ -3,12 +3,14 @@ import PostalMime from 'postal-mime';
 interface Env {
 	TELEGRAM_BOT_TOKEN: string;
 	TELEGRAM_CHAT_ID: string;
+	TELEGRAM_TOPIC_ID?: string;
 }
 
 export default {
 	async email(message: ForwardableEmailMessage, env: Env, ctx: ExecutionContext): Promise<void> {
 		const telegramBotToken = env.TELEGRAM_BOT_TOKEN;
 		const telegramChatId = env.TELEGRAM_CHAT_ID;
+		const telegramTopicId = env.TELEGRAM_TOPIC_ID;
 
 		if (!telegramBotToken || !telegramChatId) {
 			console.error('Missing Telegram configuration');
@@ -45,7 +47,7 @@ export default {
 				`*Tanggal Transaksi:* ${escapeMarkdown(transactionDetails.tanggalTransaksi)}\n` +
 				`*Nomor Kartu Kredit BNI:* ${escapeMarkdown(transactionDetails.nomorKartuKredit)}`;
 
-			await sendToTelegram(telegramBotToken, telegramChatId, telegramMessage);
+			await sendToTelegram(telegramBotToken, telegramChatId, telegramTopicId, telegramMessage);
 
 		} catch (error) {
 			console.error('Error parsing email or sending to Telegram:', error);
@@ -122,13 +124,17 @@ function parseForwardedMail(content: string): { from?: string, subject?: string,
 	return { from, subject, date };
 }
 
-async function sendToTelegram(token: string, chatId: string, text: string) {
+async function sendToTelegram(token: string, chatId: string, topicId: string | undefined, text: string) {
 	const url = `https://api.telegram.org/bot${token}/sendMessage`;
-	const body = {
+	const body: Record<string, unknown> = {
 		chat_id: chatId,
 		text: text,
 		parse_mode: 'Markdown'
 	};
+
+	if (topicId) {
+		body.message_thread_id = topicId;
+	}
 
 	const response = await fetch(url, {
 		method: 'POST',
