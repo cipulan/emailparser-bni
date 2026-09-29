@@ -70,7 +70,7 @@ A Cloudflare Worker that parses incoming emails **Transaction Notification from 
     npx wrangler secret put WA_API_KEY
     npx wrangler secret put WA_GROUP_ID
     npx wrangler secret put WA_SESSION  # optional
-    npx wrangler secret put WA_ENABLED  # optional, set to "true" to enable
+    # WA_ENABLED is set in wrangler.toml under [vars] ("true" to enable, "false" to disable)
     ```
     *Note: You can also set these in the Cloudflare Dashboard under Worker > Settings > Variables and Secrets.*
 
