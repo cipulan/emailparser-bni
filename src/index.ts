@@ -8,6 +8,7 @@ interface Env {
 	WA_API_KEY?: string;
 	WA_GROUP_ID?: string;
 	WA_SESSION?: string;
+	WA_ENABLED?: string;
 }
 
 export default {
@@ -53,7 +54,7 @@ export default {
 
 			await sendToTelegram(telegramBotToken, telegramChatId, telegramTopicId, telegramMessage);
 
-			await sendToWhatsApp(env.WA_API_URL, env.WA_API_KEY, env.WA_GROUP_ID, telegramMessage, env.WA_SESSION);
+			await sendToWhatsApp(env.WA_API_URL, env.WA_API_KEY, env.WA_GROUP_ID, telegramMessage, env.WA_SESSION, env.WA_ENABLED);
 
 		} catch (error) {
 			console.error('Error parsing email or sending to Telegram:', error);
@@ -166,7 +167,10 @@ function escapeMarkdown(text: string): string {
 }
 
 
-async function sendToWhatsApp(apiUrl: string | undefined, apiKey: string | undefined, groupId: string | undefined, text: string, session?: string) {
+async function sendToWhatsApp(apiUrl: string | undefined, apiKey: string | undefined, groupId: string | undefined, text: string, session?: string, enabled?: string) {
+	if (enabled !== 'true') {
+		return;
+	}
 	if (!apiUrl || !apiKey || !groupId) {
 		console.error('Missing WhatsApp configuration, skipping');
 		return;
