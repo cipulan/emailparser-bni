@@ -32,3 +32,5 @@ head_sampling_rate = 1
 
 [vars]
 TELEGRAM_TOPIC_ID = "62"
+WA_API_URL = "https://api-wa.pingsut.com"
+WA_GROUP_ID = "120363421445353852@g.us"
